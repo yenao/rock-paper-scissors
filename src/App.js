@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Box from './component/Box';
-import './App.css'
+import "./App.css";
 
 // 1. 박스 2개 ( 타이틀, 사진, 결과)
 // 2. 가위 바위 보 버튼이 존재한다.
@@ -21,68 +21,113 @@ const choice = {
   paper:{
     name:"Paper",
     img:"https://www.officewarehouse.com.ph/__resources/_web_data_/products/products/image_gallery/6932_4640.jpg"
-  }
+  },
 };
 function App() {
 
-  const [userSelect, setUserSelect] = useState(null);
-  const [comSelect, setComSelect] = useState(null);
-  const [res, setRes] = useState("");
-  // const [comRes, setComRes] = useState("");
+  // const [userSelect, setUserSelect] = useState(null);
+  // const [comSelect, setComSelect] = useState(null);
+  // const [res, setRes] = useState("");
+  // // const [comRes, setComRes] = useState("");
 
-  const play = (userChoice) => {
-    console.log('선택됨!  ',userChoice);
-    setUserSelect(choice[userChoice]);
-    let comChoice = randomChoice();
-    setComSelect(comChoice);
-    setRes(judgement(choice[userChoice],comChoice));
-    // setComRes(comJudge(setRes));
-  };
+  // const play = (userChoice) => {
+  //   console.log('선택됨!  ',userChoice);
+  //   setUserSelect(choice[userChoice]);
+  //   let comChoice = randomChoice();
+  //   setComSelect(comChoice);
+  //   setRes(judgement(choice[userChoice],comChoice));
+  //   // setComRes(comJudge(setRes));
+  // };
   
-  const judgement = (user,computer) => {
-    console.log('user : ',user,',   computer :  ',computer);
+  // const judgement = (user,computer) => {
+  //   console.log('user : ',user,',   computer :  ',computer);
 
-    // 가위바위보의 알고리즘.
-    if(user.name == computer.name)
-    {
-      return "tie";
-    }
-    else if(user.name=="Rock") 
-      return computer.name=="Scissors"?"Win":"Lose";
-    else if(user.name=="Scissors") 
-      return computer.name=="Papaer"?"Win":"Lose";
-    else if(user.name=="Paper") 
-      return computer.name=="Rock"?"Win":"Lose";
-  };
-
-  // const comJudge = (userRes) => {
-  //   console.log('oyn   userRes  : ',userRes);
-  //   if(userRes == "Win"){
-  //     return "Lose";
-  //   }else if(userRes == "Lose"){
-  //     return "Win";
-  //   }else{
+  //   // 가위바위보의 알고리즘.
+  //   if(user.name === computer.name)
+  //   {
   //     return "tie";
   //   }
+  //   else if(user.name==="Rock") 
+  //     return computer.name==="Scissors"?"Win":"Lose";
+  //   else if(user.name==="Scissors") 
+  //     return computer.name==="Papaer"?"Win":"Lose";
+  //   else if(user.name==="paper") 
+  //     return computer.name==="Rock"?"Win":"Lose";
   // };
 
-  const randomChoice = () => {
-    let itemArray = Object.keys(choice);                  // Object.keys() : 객체에 키 값만 뽑아서 만들어주는 함수.
-    console.log('itemArry  ::  ', itemArray);
-    let randomItem = Math.floor(Math.random() * itemArray.length);    // Math.random() : JavaScript의 0부터 1사이의 숫자를 랜덤하게 가져오는 함수. | Math.floor() : 소수점 아래에 있는 숫자를 버리는 함수.
-    console.log("randomItem :::::: ",randomItem);
-    let final = itemArray[randomItem];
-    console.log("final  ",final);
-    return choice[final];
+  // // const comJudge = (userRes) => {
+  // //   console.log('oyn   userRes  : ',userRes);
+  // //   if(userRes == "Win"){
+  // //     return "Lose";
+  // //   }else if(userRes == "Lose"){
+  // //     return "Win";
+  // //   }else{
+  // //     return "tie";
+  // //   }
+  // // };
+
+  // const randomChoice = () => {
+  //   let itemArray = Object.keys(choice);                  // Object.keys() : 객체에 키 값만 뽑아서 만들어주는 함수.
+  //   console.log('itemArry  ::  ', itemArray);
+  //   let randomItem = Math.floor(Math.random() * itemArray.length);    // Math.random() : JavaScript의 0부터 1사이의 숫자를 랜덤하게 가져오는 함수. | Math.floor() : 소수점 아래에 있는 숫자를 버리는 함수.
+  //   console.log("randomItem :::::: ",randomItem);
+  //   let final = itemArray[randomItem];
+  //   console.log("final  ",final);
+  //   return choice[final];
+  // };
+
+  // return (
+  //   <div>
+  //     <div className="main">
+  //       <Box title="You" item={userSelect} result={res}/>
+  //       <Box title="Computer" item={comSelect} result={res}/>
+  //     </div>
+  //     <div className="main">
+  //       <button onClick={() => play("scissors")}>가위</button>
+  //       <button onClick={() => play("rock")}>바위</button>
+  //       <button onClick={() => play("paper")}>보</button>
+  //     </div>
+  //   </div>
+  // );
+
+
+  const [userSelect, setUserSelect] = useState(null);
+  const [computerSelect, setComputerSelect] = useState(null);
+  const [result, setResult] = useState("");
+  const play = (userChoice) => {
+    setUserSelect(choice[userChoice]);
+    let computerChoice = randomChoice();
+    setComputerSelect(computerChoice);
+    setResult(judgement(choice[userChoice], computerChoice));
   };
 
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice); 
+    console.log("item array", itemArray);
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+    console.log("random value", randomItem);
+    let final = itemArray[randomItem];
+    return choice[final];
+  };
+  const judgement = (user, computer) => {
+    console.log("user", user, "computer", computer);
+
+    if (user.name == computer.name) {
+      return "tie";
+    } else if (user.name == "Rock")
+      return computer.name == "Scissors" ? "win" : "lose";
+    else if (user.name == "Scissors")
+      return computer.name == "Paper" ? "win" : "lose";
+    else if (user.name == "Paper")
+      return computer.name == "Rock" ? "win" : "lose";
+  };
   return (
-    <div>
+    <div className="app-container">
       <div className="main">
-        <Box title="You" item={userSelect} result={res}/>
-        <Box title="Computer" item={comSelect} result={res}/>
+        <Box title="You" item={userSelect} result={result} />
+        <Box title="Computer" item={computerSelect} result={result} />
       </div>
-      <div className="main">
+      <div className="button-container">
         <button onClick={() => play("scissors")}>가위</button>
         <button onClick={() => play("rock")}>바위</button>
         <button onClick={() => play("paper")}>보</button>
